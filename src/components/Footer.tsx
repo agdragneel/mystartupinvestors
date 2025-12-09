@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 export default function Footer() {
   return (
     <footer className="bg-white border-t border-[rgba(49,55,43,0.12)] mt-16 py-8 px-6 text-[#717182] text-[14px] font-[Arial]">
@@ -16,9 +18,9 @@ export default function Footer() {
           <a href="#" className="hover:underline">
             Privacy Policy
           </a>
-          <a href="#" className="hover:underline">
+          <Link href="/blog" className="hover:underline">
             Blog
-          </a>
+          </Link>
         </div>
       </div>
     </footer>

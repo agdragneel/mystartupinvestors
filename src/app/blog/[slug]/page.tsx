@@ -1,23 +1,71 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { fetchHashnodePost } from "@/lib/hashnode";
 import Link from "next/link";
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import { useParams } from "next/navigation";
 import Footer from "@/components/Footer";
+import AuthenticatedNavbar from "@/components/Navbar";
+import { createSupabaseBrowserClient } from "@/lib/supabaseBrowser";
 
-export const revalidate = 3600; // Revalidate every hour
-
-interface BlogPostPageProps {
-    params: {
-        slug: string;
+interface Post {
+    id: string;
+    title: string;
+    brief: string;
+    slug: string;
+    coverImage?: {
+        url: string;
     };
+    publishedAt: string;
+    author: {
+        name: string;
+        profilePicture?: string;
+    };
+    content: {
+        html: string;
+    };
+    readTimeInMinutes: number;
+    tags?: Array<{
+        name: string;
+        slug: string;
+    }>;
 }
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
-    const post = await fetchHashnodePost(params.slug);
+export default function BlogPostPage() {
+    const params = useParams();
+    const slug = params.slug as string;
+    const [post, setPost] = useState<Post | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const supabase = createSupabaseBrowserClient();
 
-    if (!post) {
-        notFound();
-    }
+    useEffect(() => {
+        const checkAuth = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            setIsAuthenticated(!!user);
+        };
+
+        const loadPost = async () => {
+            const fetchedPost = await fetchHashnodePost(slug);
+            setPost(fetchedPost);
+            setLoading(false);
+        };
+
+        checkAuth();
+        loadPost();
+    }, [slug, supabase]);
+
+    const handleGoogleLogin = async () => {
+        const { error } = await supabase.auth.signInWithOAuth({
+            provider: "google",
+            options: {
+                redirectTo: `${window.location.origin}/auth/callback`,
+            },
+        });
+
+        if (error) console.error("Google Login Error:", error);
+    };
 
     // Format date helper
     const formatDate = (dateString: string) => {
@@ -29,32 +77,137 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         });
     };
 
+    if (loading) {
+        return (
+            <>
+                {/* Conditional Navbar */}
+                {isAuthenticated ? (
+                    <AuthenticatedNavbar />
+                ) : (
+                    <nav className="fixed top-0 left-0 w-full z-50 bg-[rgba(255,255,255,0.95)] border-b border-[rgba(49,55,43,0.12)] backdrop-blur-md px-8 py-4">
+                        <div className="max-w-[1400px] mx-auto flex justify-between items-center">
+                            <Link href="/" className="flex items-center gap-2">
+                                <Image
+                                    src="/Logo.png"
+                                    alt="Logo"
+                                    width={100}
+                                    height={40}
+                                    className="h-[38px] w-auto"
+                                />
+                            </Link>
+
+                            <button
+                                onClick={handleGoogleLogin}
+                                className="bg-[#31372B] text-[#FAF7EE] px-6 py-2 rounded-lg font-bold shadow hover:opacity-90 transition cursor-pointer"
+                            >
+                                Sign In
+                            </button>
+                        </div>
+                    </nav>
+                )}
+
+                <div className="min-h-screen bg-[#FAF7EE] flex flex-col items-center justify-center">
+                    {/* Loading Spinner */}
+                    <div className="relative">
+                        <div className="w-16 h-16 border-4 border-[#31372B1F] border-t-[#31372B] rounded-full animate-spin"></div>
+                    </div>
+
+                    {/* Loading Text */}
+                    <p className="mt-6 text-[#31372B] text-lg font-medium">
+                        Loading post...
+                    </p>
+                    <p className="text-[#717182] text-sm mt-2">
+                        Please wait while we fetch the content
+                    </p>
+                </div>
+            </>
+        );
+    }
+
+    if (!post) {
+        return (
+            <>
+                {/* Conditional Navbar */}
+                {isAuthenticated ? (
+                    <AuthenticatedNavbar />
+                ) : (
+                    <nav className="fixed top-0 left-0 w-full z-50 bg-[rgba(255,255,255,0.95)] border-b border-[rgba(49,55,43,0.12)] backdrop-blur-md px-8 py-4">
+                        <div className="max-w-[1400px] mx-auto flex justify-between items-center">
+                            <Link href="/" className="flex items-center gap-2">
+                                <Image
+                                    src="/Logo.png"
+                                    alt="Logo"
+                                    width={100}
+                                    height={40}
+                                    className="h-[38px] w-auto"
+                                />
+                            </Link>
+
+                            <button
+                                onClick={handleGoogleLogin}
+                                className="bg-[#31372B] text-[#FAF7EE] px-6 py-2 rounded-lg font-bold shadow hover:opacity-90 transition cursor-pointer"
+                            >
+                                Sign In
+                            </button>
+                        </div>
+                    </nav>
+                )}
+
+                <div className="min-h-screen bg-[#FAF7EE] flex items-center justify-center pt-24">
+                    <div className="text-center">
+                        <p className="text-[#31372B] text-lg mb-4">Post not found</p>
+                        <Link href="/blog">
+                            <button className="bg-[#31372B] text-[#FAF7EE] rounded-md px-6 py-2 text-sm font-medium hover:opacity-90">
+                                Back to Blog
+                            </button>
+                        </Link>
+                    </div>
+                </div>
+            </>
+        );
+    }
+
     return (
         <>
-            {/* Navbar */}
-            <nav className="fixed top-0 left-0 w-full z-50 bg-[rgba(255,255,255,0.95)] border-b border-[rgba(49,55,43,0.12)] backdrop-blur-md px-8 py-4">
-                <div className="max-w-[1400px] mx-auto flex justify-between items-center">
-                    <Link href="/" className="flex items-center gap-2">
-                        <Image
-                            src="/Logo.png"
-                            alt="Logo"
-                            width={100}
-                            height={40}
-                            className="h-[38px] w-auto"
-                        />
-                    </Link>
+            {/* Conditional Navbar */}
+            {isAuthenticated ? (
+                <AuthenticatedNavbar />
+            ) : (
+                <nav className="fixed top-0 left-0 w-full z-50 bg-[rgba(255,255,255,0.95)] border-b border-[rgba(49,55,43,0.12)] backdrop-blur-md px-8 py-4">
+                    <div className="max-w-[1400px] mx-auto flex justify-between items-center">
+                        <Link href="/" className="flex items-center gap-2">
+                            <Image
+                                src="/Logo.png"
+                                alt="Logo"
+                                width={100}
+                                height={40}
+                                className="h-[38px] w-auto"
+                            />
+                        </Link>
 
-                    <Link href="/">
-                        <button className="bg-[#31372B] text-[#FAF7EE] px-6 py-2 rounded-lg font-bold shadow hover:opacity-90 transition cursor-pointer">
+                        <button
+                            onClick={handleGoogleLogin}
+                            className="bg-[#31372B] text-[#FAF7EE] px-6 py-2 rounded-lg font-bold shadow hover:opacity-90 transition cursor-pointer"
+                        >
                             Sign In
                         </button>
-                    </Link>
-                </div>
-            </nav>
+                    </div>
+                </nav>
+            )}
 
             <div className="min-h-screen bg-[#FAF7EE] font-[Arial] text-[#31372B]">
-                {/* Breadcrumb */}
+                {/* Content */}
                 <div className="max-w-[900px] mx-auto pt-24 px-6">
+                    {/* Back to Blog Button - Moved to Top */}
+                    <div className="mb-6">
+                        <Link href="/blog">
+                            <button className="bg-white border border-[#31372B] text-[#31372B] rounded-md px-6 py-2 text-sm font-medium hover:bg-[#31372B] hover:text-[#FAF7EE] transition-colors">
+                                ← Back to Blog
+                            </button>
+                        </Link>
+                    </div>
+
+                    {/* Breadcrumb */}
                     <div className="flex items-center gap-2 text-sm text-[#717182] mb-6">
                         <Link href="/blog" className="hover:text-[#31372B]">
                             Blog
@@ -153,15 +306,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                             />
                         </div>
                     </article>
-
-                    {/* Back to Blog Button */}
-                    <div className="mb-12">
-                        <Link href="/blog">
-                            <button className="bg-white border border-[#31372B] text-[#31372B] rounded-md px-6 py-2 text-sm font-medium hover:bg-[#31372B] hover:text-[#FAF7EE] transition-colors">
-                                ← Back to Blog
-                            </button>
-                        </Link>
-                    </div>
                 </div>
             </div>
 

@@ -1,12 +1,65 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { fetchHashnodePosts } from "@/lib/hashnode";
 import Link from "next/link";
 import Image from "next/image";
 import Footer from "@/components/Footer";
+import AuthenticatedNavbar from "@/components/Navbar";
+import { createSupabaseBrowserClient } from "@/lib/supabaseBrowser";
 
-export const revalidate = 3600; // Revalidate every hour
+interface Post {
+    id: string;
+    title: string;
+    brief: string;
+    slug: string;
+    coverImage?: {
+        url: string;
+    };
+    publishedAt: string;
+    author: {
+        name: string;
+        profilePicture?: string;
+    };
+    readTimeInMinutes: number;
+    tags?: Array<{
+        name: string;
+        slug: string;
+    }>;
+}
 
-export default async function BlogPage() {
-    const posts = await fetchHashnodePosts();
+export default function BlogPage() {
+    const [posts, setPosts] = useState<Post[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const supabase = createSupabaseBrowserClient();
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            setIsAuthenticated(!!user);
+        };
+
+        const loadPosts = async () => {
+            const fetchedPosts = await fetchHashnodePosts();
+            setPosts(fetchedPosts);
+            setLoading(false);
+        };
+
+        checkAuth();
+        loadPosts();
+    }, [supabase]);
+
+    const handleGoogleLogin = async () => {
+        const { error } = await supabase.auth.signInWithOAuth({
+            provider: "google",
+            options: {
+                redirectTo: `${window.location.origin}/auth/callback`,
+            },
+        });
+
+        if (error) console.error("Google Login Error:", error);
+    };
 
     // Format date helper
     const formatDate = (dateString: string) => {
@@ -20,39 +73,59 @@ export default async function BlogPage() {
 
     return (
         <>
-            {/* Navbar */}
-            <nav className="fixed top-0 left-0 w-full z-50 bg-[rgba(255,255,255,0.95)] border-b border-[rgba(49,55,43,0.12)] backdrop-blur-md px-8 py-4">
-                <div className="max-w-[1400px] mx-auto flex justify-between items-center">
-                    <Link href="/" className="flex items-center gap-2">
-                        <Image
-                            src="/Logo.png"
-                            alt="Logo"
-                            width={100}
-                            height={40}
-                            className="h-[38px] w-auto"
-                        />
-                    </Link>
+            {/* Conditional Navbar */}
+            {isAuthenticated ? (
+                <AuthenticatedNavbar />
+            ) : (
+                <nav className="fixed top-0 left-0 w-full z-50 bg-[rgba(255,255,255,0.95)] border-b border-[rgba(49,55,43,0.12)] backdrop-blur-md px-8 py-4">
+                    <div className="max-w-[1400px] mx-auto flex justify-between items-center">
+                        <Link href="/" className="flex items-center gap-2">
+                            <Image
+                                src="/Logo.png"
+                                alt="Logo"
+                                width={100}
+                                height={40}
+                                className="h-[38px] w-auto"
+                            />
+                        </Link>
 
-                    <Link href="/">
-                        <button className="bg-[#31372B] text-[#FAF7EE] px-6 py-2 rounded-lg font-bold shadow hover:opacity-90 transition cursor-pointer">
+                        <button
+                            onClick={handleGoogleLogin}
+                            className="bg-[#31372B] text-[#FAF7EE] px-6 py-2 rounded-lg font-bold shadow hover:opacity-90 transition cursor-pointer"
+                        >
                             Sign In
                         </button>
-                    </Link>
-                </div>
-            </nav>
+                    </div>
+                </nav>
+            )}
 
             <div className="min-h-screen bg-[#FAF7EE] font-[Arial] text-[#31372B]">
                 {/* Header */}
                 <div className="max-w-[1200px] mx-auto pt-24 px-6">
                     <div className="mb-8">
-                        <h1 className="text-[40px] font-bold text-[#31372B] mb-3">Blog</h1>
+                        <h1 className="text-[40px] font-bold text-[#31372B] mb-3">Blogs</h1>
                         <p className="text-[#717182] text-lg">
                             Insights, updates, and resources for startup founders and investors
                         </p>
                     </div>
 
                     {/* Blog Posts Grid */}
-                    {posts.length === 0 ? (
+                    {loading ? (
+                        <div className="flex flex-col items-center justify-center py-20">
+                            {/* Loading Spinner */}
+                            <div className="relative">
+                                <div className="w-16 h-16 border-4 border-[#31372B1F] border-t-[#31372B] rounded-full animate-spin"></div>
+                            </div>
+
+                            {/* Loading Text */}
+                            <p className="mt-6 text-[#31372B] text-lg font-medium">
+                                Loading blog posts...
+                            </p>
+                            <p className="text-[#717182] text-sm mt-2">
+                                Please wait while we fetch the latest content
+                            </p>
+                        </div>
+                    ) : posts.length === 0 ? (
                         <div className="text-center py-20">
                             <p className="text-[#717182] text-lg">No blog posts found.</p>
                             <p className="text-[#717182] text-sm mt-2">

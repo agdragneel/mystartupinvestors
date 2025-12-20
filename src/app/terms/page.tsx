@@ -54,7 +54,7 @@ export default function TermsOfService() {
 
                         <h2>1. Introduction</h2>
                         <p>
-                            These Terms of Service ("Terms") govern your access to and use of the MyFundingList website and services (the "Service"), operated by MyFundingList ("Company", "we", "us", or "our").
+                            {`These Terms of Service ("Terms") govern your access to and use of the MyFundingList website and services (the "Service"), operated by MyFundingList ("Company", "we", "us", or "our").`}
                         </p>
                         <p>
                             By accessing or using the Service at <a href="https://myfundinglist.com">https://myfundinglist.com</a>, you agree to be bound by these Terms. If you do not agree, you must not use the Service.

@@ -54,7 +54,7 @@ export default function PrivacyPolicy() {
 
                         <h2>1. Introduction</h2>
                         <p>
-                            MyFundingList (&quot;Company&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) operates the website <a href="https://myfundinglist.com">https://myfundinglist.com</a> (the &quot;Service&quot;).
+                            {`MyFundingList ("Company", "we", "us", or "our") operates the website `}<a href="https://myfundinglist.com">https://myfundinglist.com</a>{` (the "Service").`}
                         </p>
                         <p>
                             This Privacy Policy explains how we collect, use, store, disclose, and protect personal data when you use our Service. By accessing or using the Service, you agree to the practices described in this Privacy Policy.
@@ -183,7 +183,7 @@ export default function PrivacyPolicy() {
                         </ul>
                         <p>Requests can be made by contacting us at the email address below.</p>
 
-                        <h2>13. Children&apos;s Privacy</h2>
+                        <h2>{`13. Children's Privacy`}</h2>
                         <p>
                             The Service is not intended for individuals under the age of 18.
                         </p>

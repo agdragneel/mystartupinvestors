@@ -54,7 +54,7 @@ export default function RefundPolicy() {
 
                         <h2>1. Introduction</h2>
                         <p>
-                            This Refund Policy explains how refunds are handled for subscriptions and payments made on MyFundingList ("Company", "we", "us", or "our").
+                            {`This Refund Policy explains how refunds are handled for subscriptions and payments made on MyFundingList ("Company", "we", "us", or "our").`}
                         </p>
                         <p>
                             By purchasing or using any paid plan on <a href="https://myfundinglist.com">https://myfundinglist.com</a>, you agree to this Refund Policy in addition to our Terms of Service.
@@ -105,8 +105,8 @@ export default function RefundPolicy() {
 
                         <h2>6. Free Plans and Trials</h2>
                         <ul>
-                            <li>Free plans do not involve payment and therefore are not eligible for refunds</li>
-                            <li>Any trial access, if offered, is provided "as is" and without refund eligibility</li>
+                            <li>{`Free plans do not involve payment and therefore are not eligible for refunds`}</li>
+                            <li>{`Any trial access, if offered, is provided "as is" and without refund eligibility`}</li>
                         </ul>
 
                         <h2>7. Subscription Cancellation</h2>

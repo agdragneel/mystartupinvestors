@@ -6,6 +6,7 @@ import { Search, Zap } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createSupabaseBrowserClient } from "@/lib/supabaseBrowser";
+import Footer from "@/components/Footer";
 
 
 export default function Home() {
@@ -1177,7 +1178,7 @@ export default function Home() {
           }}
         ></div>
 
-        <div className="relative z-10 flex flex-col items-center justify-center w-[59vw] text-center">
+        <div className="relative z-10 flex flex-col items-center justify-center w-[59vw] text-center mb-[0]">
           <h2
             className="font-bold text-white"
             style={{
@@ -1214,29 +1215,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer
-        className="flex items-center justify-between bg-white text-[#717182]"
-        style={{
-          fontSize: "0.92vw",
-          padding: "1vw 7.9vw",
-        }}
-      >
-        <div>© 2025 MyFundingList. All rights reserved.</div>
-        <div className="flex gap-[2vw]">
-          <a href="#" className="hover:text-[#31372B]">
-            Refund Policy
-          </a>
-          <a href="#" className="hover:text-[#31372B]">
-            Terms & Conditions
-          </a>
-          <a href="#" className="hover:text-[#31372B]">
-            Privacy Policy
-          </a>
-          <a href="#" className="hover:text-[#31372B]">
-            Blog
-          </a>
-        </div>
-      </footer>
+      <Footer />
 
     </main>
   );

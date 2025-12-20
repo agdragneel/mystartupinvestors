@@ -4,7 +4,6 @@ import { useState, useEffect, ChangeEvent, useCallback } from "react";
 import Image from "next/image";
 import { supabase } from "@/lib/supabaseClient";
 import UpgradeModal from "@/components/UpgradeModal";
-import InvestorDetailModal from "@/components/InvestorDetailModal";
 import { useCredits } from "@/context/CreditsContext"; // ✅ USE CONTEXT
 import Link from "next/link";
 
@@ -27,8 +26,6 @@ const Dashboard = () => {
   const [industries, setIndustries] = useState<string[]>([]);
   const [selectedLocation, setSelectedLocation] = useState("All");
   const [selectedIndustry, setSelectedIndustry] = useState("All");
-  const [selectedInvestor, setSelectedInvestor] = useState<Investor | null>(null);
-  const [showDetailModal, setShowDetailModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -165,11 +162,10 @@ const Dashboard = () => {
     console.log("Current userId:", userId);
     console.log("Viewed IDs:", viewedInvestorIds);
 
-    // 1. If already viewed, just open modal
+    // 1. If already viewed, navigate to profile page
     if (viewedInvestorIds.includes(investor.id)) {
-      console.log("Investor already viewed. Opening modal.");
-      setSelectedInvestor(investor);
-      setShowDetailModal(true);
+      console.log("Investor already viewed. Navigating to profile page.");
+      window.location.href = `/investor-profile?id=${investor.id}`;
       return;
     }
 
@@ -180,8 +176,6 @@ const Dashboard = () => {
       // Optimistic update
       decrementCredit();
       setViewedInvestorIds((prev) => [...prev, investor.id]);
-      setSelectedInvestor(investor);
-      setShowDetailModal(true);
 
       // DB Updates
       if (userId) {
@@ -222,6 +216,8 @@ const Dashboard = () => {
             console.log("Successfully updated credits_used atomically");
           }
 
+          // Navigate to profile page after successful DB update
+          window.location.href = `/investor-profile?id=${investor.id}`;
 
         } catch (err) {
           console.error("Error updating credits/views:", err);
@@ -378,7 +374,7 @@ const Dashboard = () => {
                     onClick={() => handleViewProfile(inv)}
                     className="bg-[#31372B] text-[#FAF7EE] rounded-md px-4 py-1.5 text-sm font-bold hover:opacity-90 cursor-pointer"
                   >
-                    View Profile
+                    {viewedInvestorIds.includes(inv.id) ? "View Again" : "View Profile"}
                   </button>
                 </div>
               </div>
@@ -390,12 +386,6 @@ const Dashboard = () => {
       <UpgradeModal
         open={showUpgradeModal}
         onClose={() => setShowUpgradeModal(false)}
-      />
-
-      <InvestorDetailModal
-        open={showDetailModal}
-        onClose={() => setShowDetailModal(false)}
-        investor={selectedInvestor}
       />
     </div>
   );

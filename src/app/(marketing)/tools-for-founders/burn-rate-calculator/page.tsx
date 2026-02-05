@@ -4,13 +4,13 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import SmartNavbar from "@/components/SmartNavbar";
 import CreditExhaustedModal from "@/components/CreditExhaustedModal";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useCalculationCredits } from "@/hooks/useCalculationCredits";
 import DownloadPDFButton from "@/components/tools/DownloadPDFButton";
 
 export default function BurnRateCalculatorPage() {
     // Credit system
-    const { creditStatus, useCredit, isLoading } = useCalculationCredits();
+    const { creditStatus, useCredit: consumeCredit, isLoading } = useCalculationCredits();
     const [showCreditModal, setShowCreditModal] = useState(false);
     const [showResults, setShowResults] = useState(false);
     // Input states
@@ -32,7 +32,7 @@ export default function BurnRateCalculatorPage() {
             setShowCreditModal(true);
             return;
         }
-        const result = await useCredit();
+        const result = await consumeCredit();
         if (result.success) {
             // Calculate burn rate AFTER credit is consumed
             const monthlyExpensesNum = parseFloat(monthlyExpenses) || 0;
@@ -285,7 +285,7 @@ export default function BurnRateCalculatorPage() {
                                 ) : (
                                     <div className="bg-[#F5F5F5] rounded-lg p-6 h-full flex items-center justify-center min-h-[300px]">
                                         <p className="text-[#717182] text-center">
-                                            Click "Calculate Burn Rate" to see your results
+                                            Click &quot;Calculate Burn Rate&quot; to see your results
                                         </p>
                                     </div>
                                 )}

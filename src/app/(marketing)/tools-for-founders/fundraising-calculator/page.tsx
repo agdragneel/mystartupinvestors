@@ -116,7 +116,7 @@ export default function FundraisingCalculatorPage() {
                                     When should founders raise more or less?
                                 </h3>
                                 <p className="text-[16px] text-[#717182] leading-relaxed">
-                                    Raise more if market conditions are favorable, capital is cheap, or you have a clear way to deploy capital for aggressive growth. Raise less (or delay) if your valuation is low, market conditions are tough, or you haven't yet proven key milestones that would unlock a better valuation.
+                                    Raise more if market conditions are favorable, capital is cheap, or you have a clear way to deploy capital for aggressive growth. Raise less (or delay) if your valuation is low, market conditions are tough, or you haven&apos;t yet proven key milestones that would unlock a better valuation.
                                 </p>
                             </div>
 

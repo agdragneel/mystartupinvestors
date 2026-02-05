@@ -151,7 +151,7 @@ const ResultsDocument = ({ title, data = [] }: { title: string; data: PDFResultI
 );
 
 // --- Main Button Component ---
-export default function DownloadPDFButton({ fileName, title, data = [], targetId }: DownloadPDFButtonProps) {
+export default function DownloadPDFButton({ fileName, title, data = [] }: DownloadPDFButtonProps) {
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
@@ -171,7 +171,7 @@ export default function DownloadPDFButton({ fileName, title, data = [], targetId
             className="flex items-center gap-2 text-sm font-medium text-[#31372B] hover:text-[#717182] transition disabled:opacity-50"
             style={{ textDecoration: "none" }}
         >
-            {({ blob, url, loading, error }) => (
+            {({ loading }) => (
                 <>
                     <Download className="w-4 h-4" />
                     {loading ? "Preparing..." : "Download"}

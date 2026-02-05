@@ -36,7 +36,7 @@ export default function InvestabilityScoreCalculatorPage() {
                             Startup Investability Score
                         </h1>
                         <p className="text-[20px] text-[#717182] leading-relaxed max-w-[800px]">
-                            Evaluate your startup from a VC's perspective. Identify strengths and weaknesses in your team, market, traction, and defensibility.
+                            Evaluate your startup from a VC&apos;s perspective. Identify strengths and weaknesses in your team, market, traction, and defensibility.
                         </p>
                     </div>
 
@@ -104,7 +104,7 @@ export default function InvestabilityScoreCalculatorPage() {
                                     What makes a startup investable?
                                 </h3>
                                 <p className="text-[16px] text-[#717182] leading-relaxed">
-                                    Investable startups minimize risk while maximizing potential return. They have a credible team (execution risk addressed), a huge market (market risk addressed), and early signs of traction (product risk addressed). The "story" connects these dots convincingly.
+                                    Investable startups minimize risk while maximizing potential return. They have a credible team (execution risk addressed), a huge market (market risk addressed), and early signs of traction (product risk addressed). The &quot;story&quot; connects these dots convincingly.
                                 </p>
                             </div>
 
@@ -113,7 +113,7 @@ export default function InvestabilityScoreCalculatorPage() {
                                     How do VCs evaluate early-stage companies?
                                 </h3>
                                 <p className="text-[16px] text-[#717182] leading-relaxed">
-                                    At Pre-Seed and Seed, evaluation is almost entirely qualitative: "Do we believe these founders can build this future?" As you move to Series A and B, evaluation becomes quantitative: "Do the metrics prove the business model works at scale?"
+                                    At Pre-Seed and Seed, evaluation is almost entirely qualitative: &quot;Do we believe these founders can build this future?&quot; As you move to Series A and B, evaluation becomes quantitative: &quot;Do the metrics prove the business model works at scale?&quot;
                                 </p>
                             </div>
 
@@ -122,7 +122,7 @@ export default function InvestabilityScoreCalculatorPage() {
                                     Can a low score still raise funding?
                                 </h3>
                                 <p className="text-[16px] text-[#717182] leading-relaxed">
-                                    Yes, especially if one area is an outlier "10/10". For example, a repeat founder with a billion-dollar exit (Team: 10) can often raise money with just an idea (PMF: 1). However, weakness in all areas usually prevents funding.
+                                    Yes, especially if one area is an outlier &quot;10/10&quot;. For example, a repeat founder with a billion-dollar exit (Team: 10) can often raise money with just an idea (PMF: 1). However, weakness in all areas usually prevents funding.
                                 </p>
                             </div>
 

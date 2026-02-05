@@ -1,14 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import CreditExhaustedModal from "@/components/CreditExhaustedModal";
 import { useCalculationCredits } from "@/hooks/useCalculationCredits";
 import DownloadPDFButton from "@/components/tools/DownloadPDFButton";
 
 export default function DCFCalculatorClient() {
     // Credit system
-    const { creditStatus, useCredit, isLoading } = useCalculationCredits();
+    const { creditStatus, useCredit: consumeCredit, isLoading } = useCalculationCredits();
     const [showCreditModal, setShowCreditModal] = useState(false);
     const [showResults, setShowResults] = useState(false);
 
@@ -43,7 +42,7 @@ export default function DCFCalculatorClient() {
             return;
         }
 
-        const creditResult = await useCredit();
+        const creditResult = await consumeCredit();
 
         if (creditResult.success) {
             const fcf = parseFloat(year1FCF) || 0;
@@ -52,9 +51,8 @@ export default function DCFCalculatorClient() {
             const years = parseInt(projectionPeriod) || 5;
             const mult = parseFloat(terminalMultiple) || 0;
 
-            let currentFCF = fcf;
             let dcfSum = 0;
-            let yearlyProjections = [];
+            const yearlyProjections: { year: number; cashFlow: number; discounted: number }[] = [];
 
             // Calculate projections
             // Cash Flow Year N = Year 1 Cash Flow * (1 + Growth Rate)^(N-1) if we start at year 1
@@ -293,7 +291,7 @@ export default function DCFCalculatorClient() {
                         ) : (
                             <div className="bg-[#F5F5F5] rounded-lg p-6 h-full flex items-center justify-center min-h-[300px]">
                                 <p className="text-[#717182] text-center">
-                                    Click "Calculate Valuation" to see your results
+                                    Click &quot;Calculate Valuation&quot; to see your results
                                 </p>
                             </div>
                         )}

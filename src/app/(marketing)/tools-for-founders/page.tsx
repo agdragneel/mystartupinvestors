@@ -215,7 +215,7 @@ export default function ToolsForFoundersPage() {
                         </div>
                     ) : (
                         <div className="text-center py-20 text-[#717182]">
-                            <p className="text-xl">No calculators found matching "{searchTerm}"</p>
+                            <p className="text-xl">No calculators found matching &quot;{searchTerm}&quot;</p>
                             <button
                                 onClick={() => setSearchTerm("")}
                                 className="mt-4 text-[#31372B] font-bold underline hover:text-[#717182]"

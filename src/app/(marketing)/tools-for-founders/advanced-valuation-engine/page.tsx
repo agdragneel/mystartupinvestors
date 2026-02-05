@@ -4,7 +4,7 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import SmartNavbar from "@/components/SmartNavbar";
 import CreditExhaustedModal from "@/components/CreditExhaustedModal";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useCalculationCredits } from "@/hooks/useCalculationCredits";
 import DownloadPDFButton from "@/components/tools/DownloadPDFButton";
 
@@ -13,9 +13,8 @@ import DownloadPDFButton from "@/components/tools/DownloadPDFButton";
 
 export default function AdvancedValuationEnginePage() {
     // Credit system
-    const { creditStatus, useCredit, isLoading } = useCalculationCredits();
+    const { creditStatus, useCredit: consumeCredit, isLoading } = useCalculationCredits();
     const [showCreditModal, setShowCreditModal] = useState(false);
-    const [hasCalculated, setHasCalculated] = useState(false);
     const [showResults, setShowResults] = useState(false);
 
     // Input states
@@ -45,7 +44,7 @@ export default function AdvancedValuationEnginePage() {
         }
 
         // Consume credit
-        const result = await useCredit();
+        const result = await consumeCredit();
 
         if (result.success) {
             // Calculate valuation AFTER credit is consumed
@@ -73,7 +72,6 @@ export default function AdvancedValuationEnginePage() {
             });
 
             setShowResults(true);
-            setHasCalculated(true);
         } else {
             setShowCreditModal(true);
         }
@@ -329,7 +327,7 @@ export default function AdvancedValuationEnginePage() {
                                 ) : (
                                     <div className="bg-[#F5F5F5] rounded-lg p-6 h-full flex items-center justify-center min-h-[300px]">
                                         <p className="text-[#717182] text-center">
-                                            Click "Calculate Valuation" to see your results
+                                            Click &quot;Calculate Valuation&quot; to see your results
                                         </p>
                                     </div>
                                 )}

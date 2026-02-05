@@ -4,13 +4,13 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import SmartNavbar from "@/components/SmartNavbar";
 import CreditExhaustedModal from "@/components/CreditExhaustedModal";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useCalculationCredits } from "@/hooks/useCalculationCredits";
 import DownloadPDFButton from "@/components/tools/DownloadPDFButton";
 
 export default function ChurnRateCalculatorPage() {
     // Credit system
-    const { creditStatus, useCredit, isLoading } = useCalculationCredits();
+    const { creditStatus, useCredit: consumeCredit, isLoading } = useCalculationCredits();
     const [showCreditModal, setShowCreditModal] = useState(false);
     const [showResults, setShowResults] = useState(false);
 
@@ -38,7 +38,7 @@ export default function ChurnRateCalculatorPage() {
         }
 
         // Consume credit
-        const result = await useCredit();
+        const result = await consumeCredit();
 
         if (result.success) {
             // Calculate churn metrics AFTER credit is consumed
@@ -337,7 +337,7 @@ export default function ChurnRateCalculatorPage() {
                                 ) : (
                                     <div className="bg-[#F5F5F5] rounded-lg p-6 h-full flex items-center justify-center min-h-[300px]">
                                         <p className="text-[#717182] text-center">
-                                            Click "Calculate Churn" to see your results
+                                            Click &quot;Calculate Churn&quot; to see your results
                                         </p>
                                     </div>
                                 )}

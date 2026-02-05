@@ -1,14 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import CreditExhaustedModal from "@/components/CreditExhaustedModal";
 import { useCalculationCredits } from "@/hooks/useCalculationCredits";
 import DownloadPDFButton from "@/components/tools/DownloadPDFButton";
 
 export default function IRRCalculatorClient() {
     // Credit system
-    const { creditStatus, useCredit, isLoading } = useCalculationCredits();
+    const { creditStatus, useCredit: consumeCredit, isLoading } = useCalculationCredits();
     const [showCreditModal, setShowCreditModal] = useState(false);
     const [showResults, setShowResults] = useState(false);
 
@@ -76,7 +75,7 @@ export default function IRRCalculatorClient() {
             return;
         }
 
-        const creditResult = await useCredit();
+        const creditResult = await consumeCredit();
 
         if (creditResult.success) {
             const investment = parseFloat(initialInvestment) || 0;
@@ -265,7 +264,7 @@ export default function IRRCalculatorClient() {
                         ) : (
                             <div className="bg-[#F5F5F5] rounded-lg p-6 h-full flex items-center justify-center min-h-[300px]">
                                 <p className="text-[#717182] text-center">
-                                    Click "Calculate Returns" to see your results
+                                    Click &quot;Calculate Returns&quot; to see your results
                                 </p>
                             </div>
                         )}

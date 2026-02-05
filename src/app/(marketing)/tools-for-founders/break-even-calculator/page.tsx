@@ -4,13 +4,13 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import SmartNavbar from "@/components/SmartNavbar";
 import CreditExhaustedModal from "@/components/CreditExhaustedModal";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useCalculationCredits } from "@/hooks/useCalculationCredits";
 import DownloadPDFButton from "@/components/tools/DownloadPDFButton";
 
 export default function BreakEvenCalculatorPage() {
     // Credit system
-    const { creditStatus, useCredit, isLoading } = useCalculationCredits();
+    const { creditStatus, useCredit: consumeCredit, isLoading } = useCalculationCredits();
     const [showCreditModal, setShowCreditModal] = useState(false);
     const [showResults, setShowResults] = useState(false);
     // Input states
@@ -32,7 +32,7 @@ export default function BreakEvenCalculatorPage() {
             setShowCreditModal(true);
             return;
         }
-        const result = await useCredit();
+        const result = await consumeCredit();
         if (result.success) {
             // Calculate break-even AFTER credit is consumed
             const fixedCostsNum = parseFloat(fixedCosts) || 0;
@@ -265,7 +265,7 @@ export default function BreakEvenCalculatorPage() {
                                 ) : (
                                     <div className="bg-[#F5F5F5] rounded-lg p-6 h-full flex items-center justify-center min-h-[300px]">
                                         <p className="text-[#717182] text-center">
-                                            Click "Calculate Break-Even" to see your results
+                                            Click &quot;Calculate Break-Even&quot; to see your results
                                         </p>
                                     </div>
                                 )}

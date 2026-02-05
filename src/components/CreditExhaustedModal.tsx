@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface CreditExhaustedModalProps {
@@ -15,7 +14,6 @@ export default function CreditExhaustedModal({
     isOpen,
     onClose,
     userState,
-    remaining = 0,
     resetDate,
 }: CreditExhaustedModalProps) {
     const router = useRouter();

@@ -71,7 +71,7 @@ export default function IRRCalculatorPage() {
                                 0 = Sum( Cash Flow / (1 + IRR)^t )
                             </p>
                             <p className="text-sm text-[#717182] mt-1">
-                                Where 't' is the time period in years. This equation is solved iteratively.
+                                Where &apos;t&apos; is the time period in years. This equation is solved iteratively.
                             </p>
 
                             <h4 className="text-[18px] font-bold mb-2 mt-4">2. Multiple on Invested Capital (MOIC)</h4>
@@ -123,7 +123,7 @@ export default function IRRCalculatorPage() {
                                     How do follow-on rounds affect IRR?
                                 </h3>
                                 <p className="text-[16px] text-[#717182] leading-relaxed">
-                                    Investing more capital in later years (follow-on) generally lowers the IRR because that capital has less time to compound, but it can increase the total Net Profit (cash) if the company continues to grow. This is the trade-off between "velocity" of money and "mass" of money.
+                                    Investing more capital in later years (follow-on) generally lowers the IRR because that capital has less time to compound, but it can increase the total Net Profit (cash) if the company continues to grow. This is the trade-off between &quot;velocity&quot; of money and &quot;mass&quot; of money.
                                 </p>
                             </div>
                         </div>

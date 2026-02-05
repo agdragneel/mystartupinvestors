@@ -31,10 +31,10 @@ function needsWeeklyReset(lastResetAt: string | null): boolean {
 
 export async function POST(request: NextRequest) {
     try {
-        const cookieStore = cookies();
+        const cookieStore = await cookies();
 
         // Get user from session
-        const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(
+        const { data: { user } } = await supabaseAdmin.auth.getUser(
             request.headers.get("Authorization")?.replace("Bearer ", "") || ""
         );
 

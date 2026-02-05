@@ -31,6 +31,7 @@ const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showViewed, setShowViewed] = useState(false);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1); // Added pagination state
 
   const [viewedInvestorIds, setViewedInvestorIds] = useState<number[]>([]);
   // ⭐⭐⭐ USE CREDITS FROM CONTEXT ⭐⭐⭐
@@ -126,6 +127,7 @@ const Dashboard = () => {
     }
 
     setFilteredInvestors(filtered);
+    setCurrentPage(1); // Reset to page 1 on filter/search change
   }, [searchTerm, investors, selectedLocation, selectedIndustry, showViewed, viewedInvestorIds]);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -324,62 +326,89 @@ const Dashboard = () => {
       </div>
 
       {/* Investor List */}
-      <div className="max-w-[1400px] mx-auto mt-8 space-y-6 px-6 pb-20">
+      <div className="max-w-[1400px] mx-auto mt-8 space-y-6 px-6 pb-8">
         {loading ? (
           <p className="text-[#717182]">Loading investor data...</p>
         ) : error ? (
           <p className="text-red-500">{error}</p>
         ) : (
-          filteredInvestors.map((inv) => {
-            return (
-              <div
-                key={inv.id}
-                className="flex justify-between items-start bg-white border border-[#31372B1F] rounded-xl p-5 shadow-sm"
-              >
-                {/* Avatar + Name */}
-                <div className="flex items-start gap-4 w-[250px]">
-                  <div className="flex justify-center items-center w-12 h-12 bg-[#F5F5F5] rounded-full font-bold">
-                    {inv.name.charAt(0).toUpperCase()}
+          <>
+            {filteredInvestors.slice((currentPage - 1) * 7, currentPage * 7).map((inv) => {
+              return (
+                <div
+                  key={inv.id}
+                  className="flex justify-between items-start bg-white border border-[#31372B1F] rounded-xl p-5 shadow-sm"
+                >
+                  {/* Avatar + Name */}
+                  <div className="flex items-start gap-4 w-[250px]">
+                    <div className="flex justify-center items-center w-12 h-12 bg-[#F5F5F5] rounded-full font-bold">
+                      {inv.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                      <p className="font-bold text-[15px] leading-5">
+                        {maskName(inv.name, inv.id)}
+                      </p>
+                      <p className="text-[14px] text-[#717182]">{inv.firm_name}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-bold text-[15px] leading-5">
-                      {maskName(inv.name, inv.id)}
+
+                  {/* About + Tags */}
+                  <div className="flex flex-col flex-1">
+                    <p className="text-[14px] mb-2">{inv.about}</p>
+                    <div className="flex gap-2 flex-wrap">
+                      {inv.preference_sector.split(",").map((tag) => (
+                        <span
+                          key={tag}
+                          className="bg-[#F5F5F5] border border-[#31372B1F] text-[#31372B] text-xs px-2 py-0.5 rounded-md"
+                        >
+                          {tag.trim()}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex flex-col items-end gap-3 w-[150px]">
+                    <p className="text-[14px] text-[#717182] text-right pr-2">
+                      {inv.country}
                     </p>
-                    <p className="text-[14px] text-[#717182]">{inv.firm_name}</p>
+
+                    <button
+                      onClick={() => handleViewProfile(inv)}
+                      className="bg-[#31372B] text-[#FAF7EE] rounded-md px-4 py-1.5 text-sm font-bold hover:opacity-90 cursor-pointer"
+                    >
+                      {viewedInvestorIds.includes(inv.id) ? "View Again" : "View Profile"}
+                    </button>
                   </div>
                 </div>
+              );
+            })}
 
-                {/* About + Tags */}
-                <div className="flex flex-col flex-1">
-                  <p className="text-[14px] mb-2">{inv.about}</p>
-                  <div className="flex gap-2 flex-wrap">
-                    {inv.preference_sector.split(",").map((tag) => (
-                      <span
-                        key={tag}
-                        className="bg-[#F5F5F5] border border-[#31372B1F] text-[#31372B] text-xs px-2 py-0.5 rounded-md"
-                      >
-                        {tag.trim()}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+            {/* Pagination Controls */}
+            {filteredInvestors.length > 7 && (
+              <div className="flex justify-center items-center gap-2 mt-8">
+                <button
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="px-3 py-1 rounded border border-[#31372B1F] text-sm disabled:opacity-50 hover:bg-[#F5F5F5]"
+                >
+                  Previous
+                </button>
 
-                {/* Actions */}
-                <div className="flex flex-col items-end gap-3 w-[150px]">
-                  <p className="text-[14px] text-[#717182] text-right pr-2">
-                    {inv.country}
-                  </p>
+                <span className="text-sm text-[#717182]">
+                  Page {currentPage} of {Math.ceil(filteredInvestors.length / 7)}
+                </span>
 
-                  <button
-                    onClick={() => handleViewProfile(inv)}
-                    className="bg-[#31372B] text-[#FAF7EE] rounded-md px-4 py-1.5 text-sm font-bold hover:opacity-90 cursor-pointer"
-                  >
-                    {viewedInvestorIds.includes(inv.id) ? "View Again" : "View Profile"}
-                  </button>
-                </div>
+                <button
+                  onClick={() => setCurrentPage((p) => Math.min(Math.ceil(filteredInvestors.length / 7), p + 1))}
+                  disabled={currentPage >= Math.ceil(filteredInvestors.length / 7)}
+                  className="px-3 py-1 rounded border border-[#31372B1F] text-sm disabled:opacity-50 hover:bg-[#F5F5F5]"
+                >
+                  Next
+                </button>
               </div>
-            );
-          })
+            )}
+          </>
         )}
       </div>
 

@@ -5,14 +5,22 @@ import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import { createSupabaseBrowserClient } from "@/lib/supabaseBrowser";
 import { FiUser } from "react-icons/fi";
+import { Calculator } from "lucide-react";
 import { useCredits } from "@/context/CreditsContext";
+import { useCalculationCredits } from "@/context/CalculationCreditsContext";
 
 export default function AuthenticatedNavbar() {
   const router = useRouter();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [startupFormSubmitted, setStartupFormSubmitted] = useState(false);
-  const { credits } = useCredits(); // Get credits from context
+  const { credits } = useCredits(); // Investor credits from context
+
+  // Use calculation credits from context (now available in both layouts)
+  const { creditStatus } = useCalculationCredits();
+
+  // Check if we're on tools-for-founders pages
+  const isToolsPage = pathname?.startsWith("/tools-for-founders");
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -117,6 +125,14 @@ export default function AuthenticatedNavbar() {
           </button>
 
           <button
+            onClick={() => router.push("/tools-for-founders")}
+            className={getButtonClasses("/tools-for-founders")}
+            style={{ minWidth: "140px", height: "36px", padding: "0 16px" }}
+          >
+            Tools for Founders
+          </button>
+
+          <button
             onClick={() => router.push("/pricing")}
             className={getButtonClasses("/pricing")}
             style={{ width: "140.14px", height: "36px" }}
@@ -124,14 +140,28 @@ export default function AuthenticatedNavbar() {
             Get More Credits
           </button>
 
+          {/* Credits Display - Conditional based on page */}
           <div
             className="flex items-center gap-2 bg-[#F5F5F5] border border-[rgba(49,55,43,0.12)] rounded-md px-2"
             style={{ height: "29.59px" }}
           >
-            <Image src="/CreditIcon.png" alt="Credits Icon" width={12} height={12} />
-            <span className="font-[Arial] text-[12px] leading-[16px] text-[#31372B]">
-              {credits}
-            </span>
+            {isToolsPage ? (
+              // Show calculation credits on tools pages with calculator icon
+              <>
+                <Calculator className="w-3 h-3 text-[#31372B]" />
+                <span className="font-[Arial] text-[12px] leading-[16px] text-[#31372B]">
+                  {creditStatus.unlimited ? "∞" : creditStatus.remaining}
+                </span>
+              </>
+            ) : (
+              // Show investor credits elsewhere with existing icon
+              <>
+                <Image src="/CreditIcon.png" alt="Credits Icon" width={12} height={12} />
+                <span className="font-[Arial] text-[12px] leading-[16px] text-[#31372B]">
+                  {credits}
+                </span>
+              </>
+            )}
           </div>
 
           {/* Profile */}

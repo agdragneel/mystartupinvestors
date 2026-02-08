@@ -106,15 +106,15 @@ export default function AdminSidebar() {
     ];
 
     return (
-        <div className="w-64 bg-white border-r border-[#31372B1F] flex flex-col">
+        <div className="w-64 bg-white border-r border-[#31372B1F] flex flex-col fixed left-0 top-0 h-screen overflow-y-auto">
             {/* Header */}
-            <div className="p-6 border-b border-[#31372B1F]">
+            <div className="p-6 border-b border-[#31372B1F] flex-shrink-0">
                 <h1 className="text-[20px] font-bold text-[#31372B]">Admin Panel</h1>
                 <p className="text-[12px] text-[#717182] mt-1">MyFundingList</p>
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 p-4">
+            <nav className="flex-1 p-4 overflow-y-auto">
                 {menuItems.map((item) => {
                     const Icon = item.icon;
                     const isActive = pathname === item.path;
@@ -150,7 +150,7 @@ export default function AdminSidebar() {
             </nav>
 
             {/* Logout */}
-            <div className="p-4 border-t border-[#31372B1F]">
+            <div className="p-4 border-t border-[#31372B1F] flex-shrink-0">
                 <button
                     onClick={handleLogout}
                     disabled={loggingOut}

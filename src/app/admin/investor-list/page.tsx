@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { createSupabaseBrowserClient } from "@/lib/supabaseBrowser";
-import { Eye, Plus, FileSpreadsheet, Search } from "lucide-react";
+import { Eye, Plus, FileSpreadsheet, Search, Pencil, Trash2 } from "lucide-react";
 import InvestorDetailsModal from "@/components/InvestorDetailsModal";
 import AddInvestorModal from "@/components/AddInvestorModal";
 import AddInvestorExcelModal from "@/components/AddInvestorExcelModal";
+import EditInvestorModal from "@/components/EditInvestorModal";
+import DeleteConfirmModal from "@/components/DeleteConfirmModal";
 
 interface Investor {
   id: number;
@@ -35,6 +37,10 @@ export default function InvestorListPage() {
   const [showModal, setShowModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showExcelModal, setShowExcelModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [investorToEdit, setInvestorToEdit] = useState<Investor | null>(null);
+  const [investorToDelete, setInvestorToDelete] = useState<Investor | null>(null);
 
   // Debounce search input (300ms)
   // Manual search trigger
@@ -97,6 +103,16 @@ export default function InvestorListPage() {
   const handleViewDetails = (investor: Investor) => {
     setSelectedInvestor(investor);
     setShowModal(true);
+  };
+
+  const handleEdit = (investor: Investor) => {
+    setInvestorToEdit(investor);
+    setShowEditModal(true);
+  };
+
+  const handleDelete = (investor: Investor) => {
+    setInvestorToDelete(investor);
+    setShowDeleteModal(true);
   };
 
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
@@ -243,13 +259,38 @@ export default function InvestorListPage() {
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <button
-                      onClick={() => handleViewDetails(investor)}
-                      className="flex items-center gap-2 px-3 py-1.5 bg-[#31372B] text-white rounded-md hover:opacity-90 transition text-[12px] font-medium"
-                    >
-                      <Eye size={14} />
-                      View Details
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => handleViewDetails(investor)}
+                        className="p-2 bg-[#31372B] text-white rounded-md hover:opacity-90 transition group relative"
+                        title="View Details"
+                      >
+                        <Eye size={16} />
+                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                          View Details
+                        </span>
+                      </button>
+                      <button
+                        onClick={() => handleEdit(investor)}
+                        className="p-2 border border-[#31372B1F] text-[#31372B] rounded-md hover:bg-[#F5F5F5] transition group relative"
+                        title="Edit Investor"
+                      >
+                        <Pencil size={16} />
+                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                          Edit
+                        </span>
+                      </button>
+                      <button
+                        onClick={() => handleDelete(investor)}
+                        className="p-2 border border-red-200 text-red-600 rounded-md hover:bg-red-50 transition group relative"
+                        title="Delete Investor"
+                      >
+                        <Trash2 size={16} />
+                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                          Delete
+                        </span>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -307,6 +348,20 @@ export default function InvestorListPage() {
       <AddInvestorExcelModal
         open={showExcelModal}
         onClose={() => setShowExcelModal(false)}
+        onSuccess={fetchInvestors}
+      />
+
+      <EditInvestorModal
+        investor={investorToEdit}
+        open={showEditModal}
+        onClose={() => setShowEditModal(false)}
+        onSuccess={fetchInvestors}
+      />
+
+      <DeleteConfirmModal
+        investor={investorToDelete}
+        open={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
         onSuccess={fetchInvestors}
       />
     </div>

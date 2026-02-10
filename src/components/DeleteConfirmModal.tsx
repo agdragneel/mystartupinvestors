@@ -5,8 +5,15 @@ import { X, AlertTriangle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createSupabaseBrowserClient } from "@/lib/supabaseBrowser";
 
+interface Investor {
+    id: number;
+    name: string;
+    firm_name?: string;
+    email: string;
+}
+
 interface DeleteConfirmModalProps {
-    investor: any;
+    investor: Investor | null;
     open: boolean;
     onClose: () => void;
     onSuccess: () => void;
@@ -22,6 +29,8 @@ export default function DeleteConfirmModal({
     const [error, setError] = useState("");
 
     const handleDelete = async () => {
+        if (!investor) return;
+
         setLoading(true);
         setError("");
 
@@ -37,9 +46,9 @@ export default function DeleteConfirmModal({
 
             onSuccess();
             onClose();
-        } catch (err: any) {
+        } catch (err) {
             console.error("Error deleting investor:", err);
-            setError(err.message || "Failed to delete investor");
+            setError(err instanceof Error ? err.message : "Failed to delete investor");
         } finally {
             setLoading(false);
         }

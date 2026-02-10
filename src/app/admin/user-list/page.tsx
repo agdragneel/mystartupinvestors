@@ -78,7 +78,8 @@ export default function UserListPage() {
       </div>
 
       <div className="bg-white rounded-xl border border-[#31372B1F] shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
+        {/* Desktop View */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full">
             <thead className="bg-[#F5F5F5] border-b border-[#31372B1F]">
               <tr>
@@ -149,6 +150,56 @@ export default function UserListPage() {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile View - Cards */}
+        <div className="md:hidden flex flex-col divide-y divide-[#31372B1F]">
+          {filteredUsers.map((user) => (
+            <div key={user.id} className="p-4 hover:bg-[#F5F5F5] transition">
+              <div className="flex justify-between items-start mb-2">
+                <div>
+                  <h3 className="text-[#31372B] font-semibold text-[16px]">{user.name || "N/A"}</h3>
+                  <p className="text-[#717182] text-[14px] truncate max-w-[200px]">{user.email || "N/A"}</p>
+                </div>
+                <span className={`px-2 py-1 rounded-md text-[10px] font-medium whitespace-nowrap ${user.plan === "premium"
+                  ? "bg-purple-100 text-purple-800"
+                  : "bg-gray-100 text-gray-800"
+                  }`}>
+                  {user.plan || "free"}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 mb-3">
+                <div>
+                  <p className="text-[12px] text-[#717182]">Credits</p>
+                  <p className="text-[14px] text-[#31372B] font-medium">
+                    {user.credits_used || 0} / {user.credits_allocated || 0}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[12px] text-[#717182]">Startup Form</p>
+                  <span className={`px-2 py-0.5 rounded-md text-[10px] font-medium inline-block mt-1 ${user.startup_form_submitted
+                    ? "bg-green-100 text-green-800"
+                    : "bg-gray-100 text-gray-800"
+                    }`}>
+                    {user.startup_form_submitted ? "Submitted" : "Not Submitted"}
+                  </span>
+                </div>
+                <div>
+                  <p className="text-[12px] text-[#717182]">Joined</p>
+                  <p className="text-[14px] text-[#31372B]">
+                    {new Date(user.created_at).toLocaleDateString()}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[12px] text-[#717182]">Last Login</p>
+                  <p className="text-[14px] text-[#31372B]">
+                    {user.last_login ? new Date(user.last_login).toLocaleDateString() : "Never"}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
 
         {filteredUsers.length === 0 && (

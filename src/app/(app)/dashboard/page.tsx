@@ -52,15 +52,11 @@ const Dashboard = () => {
   // ⭐⭐⭐ USE CREDITS FROM CONTEXT ⭐⭐⭐
   const { credits, used, decrementCredit, userId } = useCredits(); // <— THIS is the correct way
 
-  const handleCountryChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedLocation(e.target.value);
-    setCurrentPage(1); // Reset to page 1
-  };
-
   const handleIndustryChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectedIndustry(e.target.value);
     setCurrentPage(1); // Reset to page 1
   };
+
 
   // Debounce search input (300ms)
   // Manual search trigger
@@ -338,10 +334,10 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-[#FAF7EE] font-[Arial] text-[#31372B]">
       {/* Header */}
-      <div className="max-w-[1400px] mx-auto mt-[92px] px-6 flex justify-between items-center">
-        <h1 className="text-[32px] font-bold">Investor database</h1>
+      <div className="max-w-[1400px] mx-auto mt-16 md:mt-[92px] px-4 md:px-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-0">
+        <h1 className="text-2xl md:text-[32px] font-bold">Investor database</h1>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 w-full md:w-auto">
           <div className="flex items-center gap-2 bg-white border border-[#31372B1F] rounded-lg px-3 py-1.5">
             <div className="w-2 h-2 bg-[#F0B100] rounded-full"></div>
 
@@ -368,8 +364,8 @@ const Dashboard = () => {
       </div>
 
       {/* Search + Filters */}
-      <div className="max-w-[1400px] mx-auto mt-8 flex flex-wrap items-center gap-4 px-6">
-        <div className="relative flex-1 flex gap-2">
+      <div className="max-w-[1400px] mx-auto mt-6 md:mt-8 flex flex-col md:flex-row md:flex-wrap items-stretch md:items-center gap-3 md:gap-4 px-4 md:px-6">
+        <div className="relative w-full md:flex-1 flex gap-2">
           <div className="relative flex-1">
             <input
               type="text"
@@ -390,7 +386,7 @@ const Dashboard = () => {
         </div>
 
         {/* Searchable Location Filter */}
-        <div className="relative w-44">
+        <div className="relative w-full md:w-44">
           <input
             type="text"
             placeholder="Search location..."
@@ -438,7 +434,7 @@ const Dashboard = () => {
         <select
           value={selectedIndustry}
           onChange={handleIndustryChange}
-          className="bg-white border border-[#31372B1F] rounded-md px-3 py-2 text-sm text-[#31372B] w-44"
+          className="bg-white border border-[#31372B1F] rounded-md px-3 py-2 text-sm text-[#31372B] w-full md:w-44"
           size={1}
         >
           <option value="All">All Industries</option>
@@ -465,7 +461,7 @@ const Dashboard = () => {
       </div>
 
       {/* Investor List */}
-      <div className="max-w-[1400px] mx-auto mt-8 space-y-6 px-6 pb-8">
+      <div className="max-w-[1400px] mx-auto mt-6 md:mt-8 space-y-4 md:space-y-6 px-4 md:px-6 pb-8">
         {loading ? (
           <p className="text-[#717182]">Loading investor data...</p>
         ) : error ? (
@@ -476,11 +472,11 @@ const Dashboard = () => {
               return (
                 <div
                   key={inv.id}
-                  className="flex justify-between items-start bg-white border border-[#31372B1F] rounded-xl p-5 shadow-sm"
+                  className="flex flex-col md:flex-row justify-between items-start bg-white border border-[#31372B1F] rounded-xl p-4 md:p-5 shadow-sm gap-4 md:gap-0"
                 >
                   {/* Avatar + Name */}
-                  <div className="flex items-start gap-4 w-[250px]">
-                    <div className="flex justify-center items-center w-12 h-12 bg-[#F5F5F5] rounded-full font-bold">
+                  <div className="flex items-start gap-3 md:gap-4 w-full md:w-[250px]">
+                    <div className="flex justify-center items-center w-10 h-10 md:w-12 md:h-12 bg-[#F5F5F5] rounded-full font-bold text-sm md:text-base shrink-0">
                       {inv.name.charAt(0).toUpperCase()}
                     </div>
                     <div>
@@ -497,7 +493,7 @@ const Dashboard = () => {
                   </div>
 
                   {/* About + Tags */}
-                  <div className="flex flex-col flex-1">
+                  <div className="flex flex-col flex-1 w-full md:w-auto">
                     {viewedInvestorIds.includes(inv.id) ? (
                       // Full about text for unlocked investors
                       <p className="text-[14px] mb-2">{inv.about}</p>
@@ -526,7 +522,7 @@ const Dashboard = () => {
                   </div>
 
                   {/* Actions */}
-                  <div className="flex flex-col items-end gap-3 w-[150px]">
+                  <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-start gap-3 w-full md:w-[150px]">
                     <p className="text-[14px] text-[#717182] text-right pr-2">
                       {inv.country}
                     </p>
@@ -534,7 +530,7 @@ const Dashboard = () => {
                     <button
                       onClick={() => handleViewProfile(inv)}
                       disabled={loadingInvestorId === inv.id}
-                      className="bg-[#31372B] text-[#FAF7EE] rounded-md px-4 py-1.5 text-sm font-bold hover:opacity-90 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 justify-center min-w-[120px]"
+                      className="bg-[#31372B] text-[#FAF7EE] rounded-md px-4 py-2 md:py-1.5 text-sm font-bold hover:opacity-90 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 justify-center w-full md:w-auto md:min-w-[120px]"
                     >
                       {loadingInvestorId === inv.id ? (
                         <>

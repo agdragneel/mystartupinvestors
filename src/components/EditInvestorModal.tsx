@@ -5,8 +5,21 @@ import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createSupabaseBrowserClient } from "@/lib/supabaseBrowser";
 
+interface Investor {
+    id: number;
+    name: string;
+    firm_name?: string;
+    type?: string;
+    email: string;
+    linkedin?: string;
+    city?: string;
+    country?: string;
+    preference_sector?: string;
+    about?: string;
+}
+
 interface EditInvestorModalProps {
-    investor: any;
+    investor: Investor | null;
     open: boolean;
     onClose: () => void;
     onSuccess: () => void;
@@ -51,6 +64,8 @@ export default function EditInvestorModal({
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!investor) return;
+
         setLoading(true);
         setError("");
 
@@ -66,9 +81,9 @@ export default function EditInvestorModal({
 
             onSuccess();
             onClose();
-        } catch (err: any) {
+        } catch (err) {
             console.error("Error updating investor:", err);
-            setError(err.message || "Failed to update investor");
+            setError(err instanceof Error ? err.message : "Failed to update investor");
         } finally {
             setLoading(false);
         }

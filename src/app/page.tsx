@@ -122,20 +122,23 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="relative w-full flex justify-center mt-[30px]">
+        <div className="relative w-full hidden md:flex justify-center mt-[30px] px-4">
           <div
             className="
       relative
       bg-[#1E1E1E]
-      w-[1437px]
-      h-[555px]
+      w-full
+      max-w-[1437px]
+      aspect-[1437/555]
+      md:h-[555px]
+      md:aspect-auto
       rounded-[22px]
       shadow-[inset_2px_2px_6.2px_rgba(255,255,255,0.11),inset_-2px_2px_9.2px_rgba(255,255,255,0.10)]
       overflow-hidden
     "
           >
             <div
-              className="absolute top-[67px] left-[172px] right-[61px] bottom-0 bg-no-repeat bg-center bg-contain"
+              className="absolute inset-0 md:top-[67px] md:left-[172px] md:right-[61px] md:bottom-0 bg-no-repeat bg-center bg-contain p-4 md:p-0"
               style={{ backgroundImage: "url('/LandingPagePhoto.png')" }}
             />
           </div>
@@ -776,57 +779,35 @@ export default function Home() {
       </section>
       {/* ✅ Trusted by Indian Founders Section */}
       <section
-        className="relative mt-[-7vw] flex flex-col items-start isolate bg-[#FAF7EE]"
-        style={{
-          padding: "6.31vw 7.9vw 0 7.9vw",
-          gap: "4.21vw",
-        }}
+        className="relative mt-0 md:mt-[-7vw] flex flex-col items-center md:items-start isolate bg-[#FAF7EE] px-4 md:px-[7.9vw] py-12 md:py-[6.31vw] gap-8 md:gap-[4.21vw]"
       >
         {/* Badge */}
         <div
-          className="absolute flex items-center"
+          className="flex items-center mx-auto md:mx-0 md:absolute bg-[rgba(49,55,43,0.12)] border border-[rgba(49,55,43,0.1)] rounded-full px-4 py-2 md:px-[1.4vw] md:py-[0.75vw] gap-2 md:gap-[0.93vw]"
           style={{
             top: "5.04vw",
             left: "44.3vw",
-            background: "rgba(49,55,43,0.12)",
-            border: "0.05vw solid rgba(49,55,43,0.1)",
-            borderRadius: "100vw",
-            padding: "0.75vw 1.4vw",
-            gap: "0.93vw",
           }}
         >
           <div
-            style={{
-              width: "0.53vw",
-              height: "0.53vw",
-              borderRadius: "50%",
-              background: "#C6FF55",
-              opacity: 0.94,
-            }}
+            className="w-2 h-2 md:w-[0.53vw] md:h-[0.53vw] rounded-full bg-[#C6FF55] opacity-94"
           ></div>
           <span
-            className="font-bold uppercase tracking-wide text-[#31372B]"
-            style={{ fontSize: "0.92vw", letterSpacing: "0.02vw" }}
+            className="font-bold uppercase tracking-wide text-[#31372B] text-xs md:text-[0.92vw]"
           >
             Testimonials
           </span>
         </div>
 
         {/* Headings */}
-        <div className="text-center w-full" style={{ marginTop: "2vw" }}>
+        <div className="text-center w-full mt-4 md:mt-[2vw]">
           <h2
-            className="font-bold text-[#31372B]"
-            style={{
-              fontSize: "2.89vw",
-              lineHeight: "4.35vw",
-              letterSpacing: "-0.06vw",
-            }}
+            className="font-bold text-[#31372B] text-3xl md:text-[2.89vw] leading-tight md:leading-[4.35vw]"
           >
             Trusted by Indian Founders
           </h2>
           <p
-            className="text-[#717182]"
-            style={{ fontSize: "1.18vw", lineHeight: "1.9vw", marginTop: "0.7vw" }}
+            className="text-[#717182] text-base md:text-[1.18vw] leading-relaxed md:leading-[1.9vw] mt-2 md:mt-[0.7vw]"
           >
             See how founders are accelerating their fundraising journey with
             <span className="font-semibold text-[#31372B]"> MyFundingList</span>
@@ -835,50 +816,34 @@ export default function Home() {
 
         {/* Masonry Grid */}
         <div
-          className="relative grid"
-          style={{
-            gridTemplateColumns: "55.6vw 27vw",
-            gap: "1.8vw",
-            width: "100%",
-            marginTop: "-1.5vw",
-          }}
+          className="relative grid grid-cols-1 md:grid-cols-[55.6vw_27vw] gap-4 md:gap-[1.8vw] w-full mt-0 md:mt-[-1.5vw]"
         >
           {/* Left Large Card */}
           <div
-            className="flex flex-col justify-between bg-white border border-[#31372B]/10 shadow-md rounded-[1.58vw] p-[2.7vw]"
-            style={{ gridRow: "1 / span 2" }}
+            className="flex flex-col justify-between bg-white border border-[#31372B]/10 shadow-md rounded-2xl md:rounded-[1.58vw] p-6 md:p-[2.7vw] md:row-span-2"
           >
             <div
-              style={{
-                width: "2.63vw",
-                height: "2.1vw",
-                background:
-                  "linear-gradient(90deg, rgba(198,255,85,0.3) 50%, rgba(198,255,85,0.3) 50%)",
-                marginBottom: "1.6vw",
-              }}
+              className="w-10 h-8 md:w-[2.63vw] md:h-[2.1vw] bg-gradient-to-r from-[rgba(198,255,85,0.3)] to-[rgba(198,255,85,0.3)] mb-4 md:mb-[1.6vw]"
             ></div>
             <p
-              className="font-bold text-[#31372B]"
-              style={{ fontSize: "1.58vw", lineHeight: "2.38vw" }}
+              className="font-bold text-[#31372B] text-lg md:text-[1.58vw] leading-relaxed md:leading-[2.38vw]"
             >
               MyFundingList connected us with 15 VCs in our first month. The verified
               emails and direct contact info saved us months of cold outreach.
             </p>
-            <div className="flex items-center gap-[1.05vw] mt-[1.3vw]">
+            <div className="flex items-center gap-3 md:gap-[1.05vw] mt-4 md:mt-[1.3vw]">
               <div
-                className="flex items-center justify-center bg-[#31372B] text-[#FAF7EE] font-bold rounded-full"
-                style={{ width: "3.16vw", height: "3.16vw", fontSize: "0.92vw" }}
+                className="flex items-center justify-center bg-[#31372B] text-[#FAF7EE] font-bold rounded-full w-12 h-12 md:w-[3.16vw] md:h-[3.16vw] text-sm md:text-[0.92vw]"
               >
                 PS
               </div>
               <div>
                 <p
-                  className="font-bold text-[#31372B]"
-                  style={{ fontSize: "1.05vw" }}
+                  className="font-bold text-[#31372B] text-base md:text-[1.05vw]"
                 >
                   Priya Sharma
                 </p>
-                <p className="text-[#717182]" style={{ fontSize: "0.92vw" }}>
+                <p className="text-[#717182] text-sm md:text-[0.92vw]">
                   CEO, TechFlow
                 </p>
               </div>
@@ -886,31 +851,28 @@ export default function Home() {
           </div>
 
           {/* Right Top */}
-          <div className="bg-white border border-[#31372B]/10 shadow-md rounded-[1.58vw] p-[2.7vw] flex flex-col justify-between">
+          <div className="bg-white border border-[#31372B]/10 shadow-md rounded-2xl md:rounded-[1.58vw] p-6 md:p-[2.7vw] flex flex-col justify-between">
             <h3
-              className="font-bold text-[#31372B]"
-              style={{ fontSize: "1.58vw", lineHeight: "2vw" }}
+              className="font-bold text-[#31372B] text-lg md:text-[1.58vw] leading-snug md:leading-[2vw]"
             >
-              We’ve 5x’d our investor meetings
+              We&apos;ve 5x&apos;d our investor meetings
             </h3>
-            <p className="text-[#717182]" style={{ fontSize: "0.99vw" }}>
+            <p className="text-[#717182] text-sm md:text-[0.99vw]">
               The quality of contacts is unmatched.
             </p>
-            <div className="flex items-center gap-[1.05vw] mt-[1.3vw]">
+            <div className="flex items-center gap-3 md:gap-[1.05vw] mt-4 md:mt-[1.3vw]">
               <div
-                className="flex items-center justify-center bg-[#31372B] text-[#FAF7EE] font-bold rounded-full"
-                style={{ width: "3.16vw", height: "3.16vw", fontSize: "0.92vw" }}
+                className="flex items-center justify-center bg-[#31372B] text-[#FAF7EE] font-bold rounded-full w-12 h-12 md:w-[3.16vw] md:h-[3.16vw] text-sm md:text-[0.92vw]"
               >
                 RV
               </div>
               <div>
                 <p
-                  className="font-bold text-[#31372B]"
-                  style={{ fontSize: "1.05vw" }}
+                  className="font-bold text-[#31372B] text-base md:text-[1.05vw]"
                 >
                   Rahul Verma
                 </p>
-                <p className="text-[#717182]" style={{ fontSize: "0.92vw" }}>
+                <p className="text-[#717182] text-sm md:text-[0.92vw]">
                   Founder, FinNext
                 </p>
               </div>
@@ -918,19 +880,14 @@ export default function Home() {
           </div>
 
           {/* Right Middle (Green) */}
-          <div className="bg-[#EDF4E5] border border-[#31372B]/10 shadow-md rounded-[1.58vw] p-[2.7vw]">
+          <div className="bg-[#EDF4E5] border border-[#31372B]/10 shadow-md rounded-2xl md:rounded-[1.58vw] p-6 md:p-[2.7vw]">
             <h3
-              className="font-bold text-[#31372B]"
-              style={{ fontSize: "1.32vw", lineHeight: "2vw" }}
+              className="font-bold text-[#31372B] text-base md:text-[1.32vw] leading-snug md:leading-[2vw]"
             >
               How GrowthLabs raised $2M in 90 days
             </h3>
             <button
-              className="mt-[1.3vw] px-[1.5vw] py-[0.5vw] rounded-full font-bold text-[#31372B] shadow-sm border border-[#31372B]/20 hover:scale-105 transition"
-              style={{
-                fontSize: "0.92vw",
-                background: "#C6FF55",
-              }}
+              className="mt-4 md:mt-[1.3vw] px-4 py-2 md:px-[1.5vw] md:py-[0.5vw] rounded-full font-bold text-[#31372B] shadow-sm border border-[#31372B]/20 hover:scale-105 transition text-sm md:text-[0.92vw] bg-[#C6FF55]"
             >
               Read the case study here →
             </button>
@@ -939,38 +896,29 @@ export default function Home() {
 
         {/* ✅ Bottom Row — Fixed */}
         <div
-          className="grid"
-          style={{
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "1.1vw",
-            width: "100%",
-            marginTop: "-3vw",
-          }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-[1.1vw] w-full mt-0 md:mt-[-3vw]"
         >
           {/* Bottom Left */}
-          <div className="bg-white border border-[#31372B]/10 shadow-md rounded-[1.58vw] p-[2.7vw] flex flex-col justify-between">
+          <div className="bg-white border border-[#31372B]/10 shadow-md rounded-2xl md:rounded-[1.58vw] p-6 md:p-[2.7vw] flex flex-col justify-between">
             <p
-              className="text-[#31372B]"
-              style={{ fontSize: "1.1vw", lineHeight: "1.8vw" }}
+              className="text-[#31372B] text-base md:text-[1.1vw] leading-relaxed md:leading-[1.8vw]"
             >
-              “Before MyFundingList, our team spent weeks researching investors. Now
-              we focus on what matters — building our product.”
+              &quot;Before MyFundingList, our team spent weeks researching investors. Now
+              we focus on what matters — building our product.&quot;
             </p>
-            <div className="flex items-center gap-[1.05vw] mt-[1.3vw]">
+            <div className="flex items-center gap-3 md:gap-[1.05vw] mt-4 md:mt-[1.3vw]">
               <div
-                className="flex items-center justify-center bg-[#31372B] text-[#FAF7EE] font-bold rounded-full"
-                style={{ width: "3.16vw", height: "3.16vw", fontSize: "0.92vw" }}
+                className="flex items-center justify-center bg-[#31372B] text-[#FAF7EE] font-bold rounded-full w-12 h-12 md:w-[3.16vw] md:h-[3.16vw] text-sm md:text-[0.92vw]"
               >
                 AM
               </div>
               <div>
                 <p
-                  className="font-bold text-[#31372B]"
-                  style={{ fontSize: "1.05vw" }}
+                  className="font-bold text-[#31372B] text-base md:text-[1.05vw]"
                 >
                   Anjali Mehta
                 </p>
-                <p className="text-[#717182]" style={{ fontSize: "0.92vw" }}>
+                <p className="text-[#717182] text-sm md:text-[0.92vw]">
                   Co-founder, HealthTech Solutions
                 </p>
               </div>
@@ -978,28 +926,25 @@ export default function Home() {
           </div>
 
           {/* Bottom Middle */}
-          <div className="bg-white border border-[#31372B]/10 shadow-md rounded-[1.58vw] p-[2.7vw] flex flex-col justify-between">
+          <div className="bg-white border border-[#31372B]/10 shadow-md rounded-2xl md:rounded-[1.58vw] p-6 md:p-[2.7vw] flex flex-col justify-between">
             <p
-              className="font-bold text-[#31372B]"
-              style={{ fontSize: "1.18vw", lineHeight: "1.8vw" }}
+              className="font-bold text-[#31372B] text-base md:text-[1.18vw] leading-relaxed md:leading-[1.8vw]"
             >
-              “MyFundingList landed us some of our top investor partnerships!”
+              &quot;MyFundingList landed us some of our top investor partnerships!&quot;
             </p>
-            <div className="flex items-center gap-[1.05vw] mt-[1.3vw]">
+            <div className="flex items-center gap-3 md:gap-[1.05vw] mt-4 md:mt-[1.3vw]">
               <div
-                className="flex items-center justify-center bg-[#31372B] text-[#FAF7EE] font-bold rounded-full"
-                style={{ width: "3.16vw", height: "3.16vw", fontSize: "0.92vw" }}
+                className="flex items-center justify-center bg-[#31372B] text-[#FAF7EE] font-bold rounded-full w-12 h-12 md:w-[3.16vw] md:h-[3.16vw] text-sm md:text-[0.92vw]"
               >
                 VS
               </div>
               <div>
                 <p
-                  className="font-bold text-[#31372B]"
-                  style={{ fontSize: "1.05vw" }}
+                  className="font-bold text-[#31372B] text-base md:text-[1.05vw]"
                 >
                   Vikram Singh
                 </p>
-                <p className="text-[#717182]" style={{ fontSize: "0.92vw" }}>
+                <p className="text-[#717182] text-sm md:text-[0.92vw]">
                   CEO, E-commerce startup
                 </p>
               </div>
@@ -1007,31 +952,28 @@ export default function Home() {
           </div>
 
           {/* Bottom Right */}
-          <div className="bg-white border border-[#31372B]/10 shadow-md rounded-[1.58vw] p-[2.7vw] flex flex-col justify-between">
+          <div className="bg-white border border-[#31372B]/10 shadow-md rounded-2xl md:rounded-[1.58vw] p-6 md:p-[2.7vw] flex flex-col justify-between">
             <h3
-              className="font-bold text-[#31372B]"
-              style={{ fontSize: "1.58vw", lineHeight: "2vw" }}
+              className="font-bold text-[#31372B] text-lg md:text-[1.58vw] leading-snug md:leading-[2vw]"
             >
               Closed our seed round in 60 days
             </h3>
-            <p className="text-[#717182]" style={{ fontSize: "0.99vw" }}>
+            <p className="text-[#717182] text-sm md:text-[0.99vw]">
               The database is comprehensive and always up-to-date.
             </p>
-            <div className="flex items-center gap-[1.05vw] mt-[1.3vw]">
+            <div className="flex items-center gap-3 md:gap-[1.05vw] mt-4 md:mt-[1.3vw]">
               <div
-                className="flex items-center justify-center bg-[#31372B] text-[#FAF7EE] font-bold rounded-full"
-                style={{ width: "3.16vw", height: "3.16vw", fontSize: "0.92vw" }}
+                className="flex items-center justify-center bg-[#31372B] text-[#FAF7EE] font-bold rounded-full w-12 h-12 md:w-[3.16vw] md:h-[3.16vw] text-sm md:text-[0.92vw]"
               >
                 DK
               </div>
               <div>
                 <p
-                  className="font-bold text-[#31372B]"
-                  style={{ fontSize: "1.05vw" }}
+                  className="font-bold text-[#31372B] text-base md:text-[1.05vw]"
                 >
                   Deepak Kumar
                 </p>
-                <p className="text-[#717182]" style={{ fontSize: "0.92vw" }}>
+                <p className="text-[#717182] text-sm md:text-[0.92vw]">
                   Founder, AI Innovations
                 </p>
               </div>
@@ -1041,11 +983,10 @@ export default function Home() {
 
         {/* Footer */}
         <div
-          className="text-center w-full mt-[-1.5vw] mb-[2.5vw] text-[#717182]"
-          style={{ fontSize: "0.92vw" }}
+          className="text-center w-full mt-0 md:mt-[-1.5vw] mb-4 md:mb-[2.5vw] text-[#717182] text-sm md:text-[0.92vw]"
         >
           Join hundreds of founders who&apos;ve successfully raised funding.
-          <span className="font-bold text-[#31372B] ml-[0.3vw]">
+          <span className="font-bold text-[#31372B] ml-1 md:ml-[0.3vw]">
             Start your journey today.
           </span>
         </div>
@@ -1053,35 +994,23 @@ export default function Home() {
       {/* FAQ Section */}
       <section
         id="faq"
-        className="w-full bg-white flex flex-col items-center"
-        style={{ padding: "6vw 0" }}
+        className="w-full bg-white flex flex-col items-center px-4 py-12 md:py-[6vw]"
       >
         {/* Title */}
         <h2
-          className="font-bold text-[#31372B]"
-          style={{
-            fontSize: "2.4vw",
-            marginBottom: "1vw",
-            letterSpacing: "-0.03vw",
-          }}
+          className="font-bold text-[#31372B] text-3xl md:text-[2.4vw] mb-4 md:mb-[1vw]"
         >
           FAQs
         </h2>
 
         {/* Divider */}
         <div
-          style={{
-            width: "82vw",
-            height: "1px",
-            background: "rgba(49,55,43,0.15)",
-            marginBottom: "2vw",
-          }}
+          className="w-full max-w-5xl md:w-[82vw] h-px bg-[rgba(49,55,43,0.15)] mb-6 md:mb-[2vw]"
         />
 
         {/* FAQ List */}
         <div
-          className="flex flex-col"
-          style={{ width: "82vw", gap: "1vw" }}
+          className="flex flex-col w-full max-w-5xl md:w-[82vw] gap-2 md:gap-[1vw]"
         >
           {[
             {
@@ -1101,7 +1030,7 @@ export default function Home() {
               a: "No. Credits never expire — you can use them anytime.",
             },
             {
-              q: "Can I get a refund if I don’t use my credits?",
+              q: "Can I get a refund if I don't use my credits?",
               a: "Unused credits are non-refundable, but they remain valid forever.",
             },
           ].map((faq, i) => (
@@ -1112,11 +1041,10 @@ export default function Home() {
             >
               <button
                 onClick={() => setActiveIndex(activeIndex === i ? null : i)}
-                className="w-full flex justify-between items-center py-[1.4vw] text-left"
+                className="w-full flex justify-between items-center py-4 md:py-[1.4vw] text-left"
               >
                 <span
-                  className="text-[#31372B]"
-                  style={{ fontSize: "1.25vw" }}
+                  className="text-[#31372B] text-base md:text-[1.25vw] font-medium"
                 >
                   {faq.q}
                 </span>
@@ -1124,8 +1052,7 @@ export default function Home() {
                 <motion.span
                   animate={{ rotate: activeIndex === i ? 45 : 0 }}
                   transition={{ duration: 0.25 }}
-                  className="text-[#31372B] font-bold"
-                  style={{ fontSize: "1.6vw", lineHeight: "0" }}
+                  className="text-[#31372B] font-bold text-2xl md:text-[1.6vw] leading-none"
                 >
                   +
                 </motion.span>
@@ -1141,11 +1068,9 @@ export default function Home() {
                 className="overflow-hidden"
               >
                 <p
-                  className="text-[#717182]"
+                  className="text-[#717182] text-sm md:text-[1.1vw] w-11/12 md:w-9/10"
                   style={{
-                    fontSize: "1.1vw",
-                    paddingBottom: activeIndex === i ? "1.4vw" : "0",
-                    width: "90%",
+                    paddingBottom: activeIndex === i ? "1rem" : "0",
                   }}
                 >
                   {faq.a}
@@ -1159,64 +1084,32 @@ export default function Home() {
       {/* CTA SECTION */}
       <section
         id="cta"
-        className="relative flex flex-col items-center justify-center overflow-hidden bg-[#1E1E1E] text-center"
-        style={{ height: "37.78vw" }}
+        className="relative flex flex-col items-center justify-center overflow-hidden bg-[#1E1E1E] text-center px-4 py-20 md:py-0 min-h-[400px] md:h-[37.78vw]"
       >
         <div
-          className="absolute rounded-full"
-          style={{
-            width: "25.24vw",
-            height: "25.24vw",
-            left: "25vw",
-            top: "9.45vw",
-            background: "rgba(198,255,85,0.1)",
-            filter: "blur(4.21vw)",
-          }}
+          className="absolute rounded-full w-64 h-64 md:w-[25.24vw] md:h-[25.24vw] left-1/4 md:left-[25vw] top-20 md:top-[9.45vw] bg-[rgba(198,255,85,0.1)] blur-[60px] md:blur-[4.21vw]"
         ></div>
 
         <div
-          className="absolute rounded-full"
-          style={{
-            width: "25.24vw",
-            height: "25.24vw",
-            left: "49.8vw",
-            top: "3.08vw",
-            background: "rgba(255,255,255,0.05)",
-            filter: "blur(4.21vw)",
-          }}
+          className="absolute rounded-full w-64 h-64 md:w-[25.24vw] md:h-[25.24vw] left-1/2 md:left-[49.8vw] top-10 md:top-[3.08vw] bg-[rgba(255,255,255,0.05)] blur-[60px] md:blur-[4.21vw]"
         ></div>
 
-        <div className="relative z-10 flex flex-col items-center justify-center w-[59vw] text-center mb-[0]">
+        <div className="relative z-10 flex flex-col items-center justify-center w-full max-w-4xl md:w-[59vw] text-center">
           <h2
-            className="font-bold text-white"
-            style={{
-              fontSize: "3.68vw",
-              lineHeight: "4.06vw",
-              letterSpacing: "-0.11vw",
-              marginBottom: "2vw",
-            }}
+            className="font-bold text-white text-3xl md:text-[3.68vw] leading-tight md:leading-[4.06vw] mb-6 md:mb-[2vw]"
           >
             Ready to accelerate your fundraising?
           </h2>
 
           <p
-            className="text-white/80"
-            style={{
-              fontSize: "1.32vw",
-              lineHeight: "2.08vw",
-              marginBottom: "3vw",
-              maxWidth: "44vw",
-            }}
+            className="text-white/80 text-base md:text-[1.32vw] leading-relaxed md:leading-[2.08vw] mb-8 md:mb-[3vw] max-w-2xl md:max-w-[44vw]"
           >
-            Join hundreds of founders who&apos;ve successfully raised funding <br />
+            Join hundreds of founders who&apos;ve successfully raised funding <br className="hidden md:block" />
             with <span className="font-semibold text-white">MyFundingList</span>
           </p>
 
           <button
-            className="font-bold text-[#31372B] bg-[#C6FF55] shadow-[0_0_1.98vw_rgba(198,255,85,0.3)] border border-[#31372B]/20 rounded-[1.05vw] hover:scale-105 transition px-[2.74vw] py-[1vw]"
-            style={{
-              fontSize: "1.18vw",
-            }}
+            className="font-bold text-[#31372B] bg-[#C6FF55] shadow-[0_0_30px_rgba(198,255,85,0.3)] md:shadow-[0_0_1.98vw_rgba(198,255,85,0.3)] border border-[#31372B]/20 rounded-xl md:rounded-[1.05vw] hover:scale-105 transition px-8 py-3 md:px-[2.74vw] md:py-[1vw] text-base md:text-[1.18vw]"
           >
             Start connecting with investors
           </button>

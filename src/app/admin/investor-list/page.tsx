@@ -182,120 +182,188 @@ export default function InvestorListPage() {
       </div>
 
       <div className="bg-white rounded-xl border border-[#31372B1F] shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[1000px]">
-            <thead className="bg-[#F5F5F5] border-b border-[#31372B1F]">
-              <tr>
-                <th className="px-6 py-3 text-left text-[12px] font-semibold text-[#31372B] uppercase tracking-wider">
-                  ID
-                </th>
-                <th className="px-6 py-3 text-left text-[12px] font-semibold text-[#31372B] uppercase tracking-wider">
-                  Name
-                </th>
-                <th className="px-6 py-3 text-left text-[12px] font-semibold text-[#31372B] uppercase tracking-wider">
-                  Firm
-                </th>
-                <th className="px-6 py-3 text-left text-[12px] font-semibold text-[#31372B] uppercase tracking-wider">
-                  Type
-                </th>
-                <th className="px-6 py-3 text-left text-[12px] font-semibold text-[#31372B] uppercase tracking-wider">
-                  Email
-                </th>
-                <th className="px-6 py-3 text-left text-[12px] font-semibold text-[#31372B] uppercase tracking-wider">
-                  Location
-                </th>
-                <th className="px-6 py-3 text-left text-[12px] font-semibold text-[#31372B] uppercase tracking-wider">
-                  Sectors
-                </th>
-                <th className="px-6 py-3 text-left text-[12px] font-semibold text-[#31372B] uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[#31372B1F]">
-              {currentPageData.map((investor: Investor) => (
-                <tr key={investor.id} className="hover:bg-[#F5F5F5] transition">
-                  <td className="px-6 py-4 text-[14px] text-[#717182]">
-                    {investor.id}
-                  </td>
-                  <td className="px-6 py-4 text-[14px] text-[#31372B] font-medium">
-                    {investor.name || "N/A"}
-                  </td>
-                  <td className="px-6 py-4 text-[14px] text-[#717182]">
-                    {investor.firm_name || "N/A"}
-                  </td>
-                  <td className="px-6 py-4">
-                    {investor.type ? (
-                      <span className="bg-[#F5F5F5] border border-[#31372B1F] text-[#31372B] text-xs px-2 py-0.5 rounded-md whitespace-nowrap">
-                        {investor.type}
-                      </span>
-                    ) : (
-                      <span className="text-[14px] text-[#717182]">N/A</span>
-                    )}
-                  </td>
-                  <td className="px-6 py-4 text-[14px] text-[#717182]">
-                    {investor.email || "N/A"}
-                  </td>
-                  <td className="px-6 py-4 text-[14px] text-[#717182]">
-                    {investor.city && investor.country
-                      ? `${investor.city}, ${investor.country}`
-                      : investor.country || "N/A"}
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex flex-wrap gap-1">
-                      {investor.preference_sector?.split(",").slice(0, 2).map((sector: string, idx: number) => (
-                        <span
-                          key={idx}
-                          className="px-2 py-1 bg-blue-100 text-blue-800 rounded-md text-[12px] font-medium"
-                        >
-                          {sector.trim()}
-                        </span>
-                      ))}
-                      {investor.preference_sector?.split(",").length > 2 && (
-                        <span className="px-2 py-1 bg-gray-100 text-gray-800 rounded-md text-[12px] font-medium">
-                          +{investor.preference_sector.split(",").length - 2}
-                        </span>
-                      )}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => handleViewDetails(investor)}
-                        className="p-2 bg-[#31372B] text-white rounded-md hover:opacity-90 transition group relative"
-                        title="View Details"
-                      >
-                        <Eye size={16} />
-                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                          View Details
-                        </span>
-                      </button>
-                      <button
-                        onClick={() => handleEdit(investor)}
-                        className="p-2 border border-[#31372B1F] text-[#31372B] rounded-md hover:bg-[#F5F5F5] transition group relative"
-                        title="Edit Investor"
-                      >
-                        <Pencil size={16} />
-                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                          Edit
-                        </span>
-                      </button>
-                      <button
-                        onClick={() => handleDelete(investor)}
-                        className="p-2 border border-red-200 text-red-600 rounded-md hover:bg-red-50 transition group relative"
-                        title="Delete Investor"
-                      >
-                        <Trash2 size={16} />
-                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                          Delete
-                        </span>
-                      </button>
-                    </div>
-                  </td>
+        <div className="bg-white rounded-xl border border-[#31372B1F] shadow-sm overflow-hidden">
+          {/* Desktop View */}
+          <div className="hidden md:block overflow-x-auto">
+            <table className="w-full min-w-[1000px]">
+              <thead className="bg-[#F5F5F5] border-b border-[#31372B1F]">
+                <tr>
+                  <th className="px-6 py-3 text-left text-[12px] font-semibold text-[#31372B] uppercase tracking-wider">
+                    ID
+                  </th>
+                  <th className="px-6 py-3 text-left text-[12px] font-semibold text-[#31372B] uppercase tracking-wider">
+                    Name
+                  </th>
+                  <th className="px-6 py-3 text-left text-[12px] font-semibold text-[#31372B] uppercase tracking-wider">
+                    Firm
+                  </th>
+                  <th className="px-6 py-3 text-left text-[12px] font-semibold text-[#31372B] uppercase tracking-wider">
+                    Type
+                  </th>
+                  <th className="px-6 py-3 text-left text-[12px] font-semibold text-[#31372B] uppercase tracking-wider">
+                    Email
+                  </th>
+                  <th className="px-6 py-3 text-left text-[12px] font-semibold text-[#31372B] uppercase tracking-wider">
+                    Location
+                  </th>
+                  <th className="px-6 py-3 text-left text-[12px] font-semibold text-[#31372B] uppercase tracking-wider">
+                    Sectors
+                  </th>
+                  <th className="px-6 py-3 text-left text-[12px] font-semibold text-[#31372B] uppercase tracking-wider">
+                    Actions
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-[#31372B1F]">
+                {currentPageData.map((investor: Investor) => (
+                  <tr key={investor.id} className="hover:bg-[#F5F5F5] transition">
+                    <td className="px-6 py-4 text-[14px] text-[#717182]">
+                      {investor.id}
+                    </td>
+                    <td className="px-6 py-4 text-[14px] text-[#31372B] font-medium">
+                      {investor.name || "N/A"}
+                    </td>
+                    <td className="px-6 py-4 text-[14px] text-[#717182]">
+                      {investor.firm_name || "N/A"}
+                    </td>
+                    <td className="px-6 py-4">
+                      {investor.type ? (
+                        <span className="bg-[#F5F5F5] border border-[#31372B1F] text-[#31372B] text-xs px-2 py-0.5 rounded-md whitespace-nowrap">
+                          {investor.type}
+                        </span>
+                      ) : (
+                        <span className="text-[14px] text-[#717182]">N/A</span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 text-[14px] text-[#717182]">
+                      {investor.email || "N/A"}
+                    </td>
+                    <td className="px-6 py-4 text-[14px] text-[#717182]">
+                      {investor.city && investor.country
+                        ? `${investor.city}, ${investor.country}`
+                        : investor.country || "N/A"}
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex flex-wrap gap-1">
+                        {investor.preference_sector?.split(",").slice(0, 2).map((sector: string, idx: number) => (
+                          <span
+                            key={idx}
+                            className="px-2 py-1 bg-blue-100 text-blue-800 rounded-md text-[12px] font-medium"
+                          >
+                            {sector.trim()}
+                          </span>
+                        ))}
+                        {investor.preference_sector?.split(",").length > 2 && (
+                          <span className="px-2 py-1 bg-gray-100 text-gray-800 rounded-md text-[12px] font-medium">
+                            +{investor.preference_sector.split(",").length - 2}
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => handleViewDetails(investor)}
+                          className="p-2 bg-[#31372B] text-white rounded-md hover:opacity-90 transition group relative"
+                          title="View Details"
+                        >
+                          <Eye size={16} />
+                        </button>
+                        <button
+                          onClick={() => handleEdit(investor)}
+                          className="p-2 border border-[#31372B1F] text-[#31372B] rounded-md hover:bg-[#F5F5F5] transition group relative"
+                          title="Edit Investor"
+                        >
+                          <Pencil size={16} />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(investor)}
+                          className="p-2 border border-red-200 text-red-600 rounded-md hover:bg-red-50 transition group relative"
+                          title="Delete Investor"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile View - Cards */}
+          <div className="md:hidden flex flex-col divide-y divide-[#31372B1F]">
+            {currentPageData.map((investor: Investor) => (
+              <div key={investor.id} className="p-4 hover:bg-[#F5F5F5] transition">
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <h3 className="text-[#31372B] font-semibold text-[16px]">{investor.name || "N/A"}</h3>
+                    <p className="text-[#717182] text-[14px]">{investor.firm_name || "No Firm"}</p>
+                  </div>
+                  {investor.type && (
+                    <span className="bg-[#F5F5F5] border border-[#31372B1F] text-[#31372B] text-[10px] px-2 py-0.5 rounded-full whitespace-nowrap">
+                      {investor.type}
+                    </span>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  <div>
+                    <p className="text-[12px] text-[#717182]">Email</p>
+                    <p className="text-[14px] text-[#31372B] truncate">{investor.email || "N/A"}</p>
+                  </div>
+                  <div>
+                    <p className="text-[12px] text-[#717182]">Location</p>
+                    <p className="text-[14px] text-[#31372B]">
+                      {investor.city && investor.country
+                        ? `${investor.city}, ${investor.country}`
+                        : investor.country || "N/A"}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mb-3">
+                  <p className="text-[12px] text-[#717182] mb-1">Sectors</p>
+                  <div className="flex flex-wrap gap-1">
+                    {investor.preference_sector?.split(",").slice(0, 3).map((sector: string, idx: number) => (
+                      <span
+                        key={idx}
+                        className="px-2 py-1 bg-blue-50 text-blue-700 border border-blue-100 rounded-md text-[10px] font-medium"
+                      >
+                        {sector.trim()}
+                      </span>
+                    ))}
+                    {investor.preference_sector?.split(",").length > 3 && (
+                      <span className="px-2 py-1 bg-gray-50 text-gray-700 border border-gray-100 rounded-md text-[10px] font-medium">
+                        +{investor.preference_sector.split(",").length - 3}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex gap-2 justify-end pt-2 border-t border-[#31372B0F]">
+                  <button
+                    onClick={() => handleViewDetails(investor)}
+                    className="flex-1 flex items-center justify-center gap-2 p-2 bg-[#31372B] text-white rounded-md text-[14px]"
+                  >
+                    <Eye size={16} /> View
+                  </button>
+                  <button
+                    onClick={() => handleEdit(investor)}
+                    className="flex items-center justify-center p-2 border border-[#31372B1F] text-[#31372B] rounded-md"
+                  >
+                    <Pencil size={16} />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(investor)}
+                    className="flex items-center justify-center p-2 border border-red-200 text-red-600 rounded-md"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {currentPageData.length === 0 && !loading && (
